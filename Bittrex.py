@@ -2,6 +2,9 @@
 #
 # https://github.com/ericsomdahl/python-bittrex
 #
+# https://bittrex.com/Home/Api
+# bittrex website implies they return a string "true" or "false", but it is a boolean
+# that can be used as is
 
 """
    See https://bittrex.com/Home/Api
