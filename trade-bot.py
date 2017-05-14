@@ -92,7 +92,7 @@ while True:
           print("%scancelling target sell %s @ %f%s" % (RED, coin, target, ENDC))
           rtn = exchange.cancel(idTargetSell[coin])
           if not rtn['success']:
-            print("error cancel order %s failed; continuing anyway (and we'll attempt to cancel it again before placing sell order)" %(idTargetSell[coin]))
+            print("error cancel order %s failed; continuing anyway (and we'll attempt to cancel it again before placing sell order)" % (idTargetSell[coin]))
           openTargetSell[coin] = False
 
         if not openStopSell[coin]:
@@ -105,12 +105,11 @@ while True:
           if not orders['success']:
             print("%sapi error fetching current orders for coin %s attempting to place order anyway%s" % (FAIL, coin, ENDC))
             print("%s%s%s" % (FAIL, orders, ENDC))
-
           for order in orders['result']:
             print("%sclearing order for %s @ %f%s" % (FAIL, coin, order['price'], ENDC))
-            rtn = exchange.cancel(order['Uuid'])
+            rtn = exchange.cancel(order['OrderUuid'])
             if not rtn['success']:
-              print("error cancel order %s failed; attempting to place stop sell anyway" %(idTargetSell[coin]))
+              print("error cancel order %s failed; attempting to place stop sell anyway" % (order['OrderUuid']))
 
           if placeOrder:
             rtn = exchange.sell_limit(coin, quantity, stopLimit)
@@ -134,13 +133,11 @@ while True:
           if not orders['success']:
             print("%sapi error fetching current orders for coin %s attempting to place order anyway%s" % (FAIL, coin, ENDC))
             print("%s%s%s" % (FAIL, orders, ENDC))
-
-          # double check with exchange if we've already placed this order; key off of Price
           for order in orders['result']:
             print("%sclearing order for %s @ %f%s" % (FAIL, coin, order['price'], ENDC))
-            rtn = exchange.cancel(order['Uuid'])
+            rtn = exchange.cancel(order['OrderUuid'])
             if not rtn['success']:
-              print("error cancel order %s failed; attempting to place stop sell anyway" %(idTargetSell[coin]))
+              print("error cancel order %s failed; attempting to place stop sell anyway" % (order['OrderUuid']))
 
           if placeOrder:
             rtn = exchange.sell_limit(coin, quantity, target)
