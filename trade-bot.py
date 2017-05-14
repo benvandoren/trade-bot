@@ -92,9 +92,7 @@ while True:
           print("%scancelling target sell %s @ %f%s" % (RED, coin, target, ENDC))
           rtn = exchange.cancel(idTargetSell[coin])
           if not rtn['success']:
-            print("error cancel order %s failed" %(idTargetSell[coin]))
-            placeOrder = False
-
+            print("error cancel order %s failed; continuing anyway (and we'll attempt to cancel it again before placing sell order)" %(idTargetSell[coin]))
           openTargetSell[coin] = False
 
         if not openStopSell[coin]:
@@ -109,7 +107,7 @@ while True:
             print("%s%s%s" % (FAIL, orders, ENDC))
 
           for order in orders['result']:
-            print("%sclearing sell for %s @ %f%s" % (FAIL, coin, order['price'], ENDC))
+            print("%sclearing order for %s @ %f%s" % (FAIL, coin, order['price'], ENDC))
             rtn = exchange.cancel(order['Uuid'])
             if not rtn['success']:
               print("error cancel order %s failed; attempting to place stop sell anyway" %(idTargetSell[coin]))
@@ -139,7 +137,7 @@ while True:
 
           # double check with exchange if we've already placed this order; key off of Price
           for order in orders['result']:
-            print("%sclearing sell for %s @ %f%s" % (FAIL, coin, order['price'], ENDC))
+            print("%sclearing order for %s @ %f%s" % (FAIL, coin, order['price'], ENDC))
             rtn = exchange.cancel(order['Uuid'])
             if not rtn['success']:
               print("error cancel order %s failed; attempting to place stop sell anyway" %(idTargetSell[coin]))
