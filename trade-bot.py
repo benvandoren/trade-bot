@@ -77,6 +77,10 @@ def main(args):
 
   while True:
     try:
+      # reinstatiate object because otherwise if we remove a 'section' from config file 
+      # it will still be cached/stale even when we call read again; the opposite is not true, 
+      # calling only read will allow new config items to be sourced in
+      config = configparser.ConfigParser() # maybe their is a better solution?
       config.read(cfgFile)
       coins = config.sections()
 
