@@ -23,6 +23,7 @@ FAIL = '\033[93m'
 ENDC = '\033[0m'
 
 def main(args):
+  cfgFile = args.file
   verbose = int(args.verbose)
   dryRun = False if args.dryrun == "false" else True
   print("starting trade bot")
@@ -42,7 +43,7 @@ def main(args):
 
   try:
     config = configparser.ConfigParser()
-    config.read("trades.cfg")
+    config.read(cfgFile)
     coins = config.sections() # skips DEFAULT
   except Exception as e:
     print("%serror exception reading config file:%s" % (FAIL, ENDC))
@@ -57,7 +58,12 @@ def main(args):
     openTargetSell = {}
     idTargetSell = {}
     # track when we already have an order on the books
+    print("monitoring following pairs:")
+    if not coins:
+      print("no coins")
+      print("update config file \"%s\" with some coin pairs" % (cfgFile))
     for coin in coins:
+      print(coin)
       openStopSell[coin] = False
       idStopSell[coin] = ""
       openTargetSell[coin] = False
@@ -71,7 +77,7 @@ def main(args):
 
   while True:
     try:
-      config.read("trades.cfg")
+      config.read(cfgFile)
       coins = config.sections()
 
       for coin in coins:
@@ -196,6 +202,7 @@ def main(args):
 
 def parse_args():
     parser = argparse.ArgumentParser()
+    parser.add_argument('-f', '--file', help='config file to use', required=False, default="trades.cfg")
     parser.add_argument('-v', '--verbose', help='verbosity level 0 - 7', required=False, default=1)
     parser.add_argument('-d', '--dryrun', help='will not buy/sell/cancel orders, make informational api calls only', required=False, default="false")
     return parser.parse_args()
