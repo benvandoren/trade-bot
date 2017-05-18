@@ -1,0 +1,9 @@
+Python:
+python3, conda
+conda create -n trade-bot python=3.5
+source activate trade-bot
+conda install -c anaconda requests 
+
+
+when done:
+source deactivate trade-bot

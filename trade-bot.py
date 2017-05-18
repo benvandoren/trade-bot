@@ -6,16 +6,24 @@
 # - verbose: 0 errors only, 1 actions only, 2-7 debug
 # - you may control quantity, but code will not handle multiple orders; any that exist will be cleared
 # - you may modify trades.cfg while script is running
-# - dryRun
-
-# TODO should dryRun set flags?
+# - dryRun simulates trades using flag
+#
+# TODO: 
+# - more intelligent cancelling (eg. support having a simultaneous buyin and stop loss, 
+#   ignore sells that we probably didn't place based on rate/quantity, it's arguable what behavior is desired)
+# - refactor 
+# - restart if program crashes
+# - add time interval to check; larger interval more resilent to outliers, but slower to react
+# - display current prices
+# - work with more exchanges and specify in coin pair 
+#   - have to account for coin pairs no longer being unique
+#   - have to make more generic api wrappers (and make high level api library for exchange if it doesn't exist)
 
 import Bittrex
 import configparser
 from time import sleep
 import traceback
 import argparse
-import numpy
 
 GREEN = '\033[92m'
 RED = '\033[91m'
@@ -29,7 +37,6 @@ def main(args):
   print("starting trade bot")
   if dryRun:
     print("dryrun option is set and no real trades will be made")
-
 
   try:
     creds = configparser.ConfigParser()
