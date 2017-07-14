@@ -1,4 +1,25 @@
-Python:
+This lets you have both a stop loss and target trigger trade simultaneously (ie. sell low and cut losses, or sell high and reap profit)
+On an exchange you can only set one or the other, this lets you have both.
+
+Tested with live trades and it works. Have not used extensively because day trading is too stressful!!!
+
+- More usage described in trade-bot.py header
+- Bittrex only
+- Copy api-creds.cfg.sample to api-cred.cfg with real credentials
+- Fill in trades.cfg and go
+- Recommended test with dryRun option first
+- trades.cfg file can be edited while program is running
+- If condition described in trades.cfg is hit any other orders for that pair WILL BE CLEARED! 
+  So if you use this script do not also set orders through website or other API calls
+
+Run:
+python3 trade-bot.py --dryrun true 
+
+
+
+
+Other:
+Python libraries and stuff:
 python3, conda
 conda create -n trade-bot python=3.5
 source activate trade-bot
@@ -7,3 +28,4 @@ conda install -c anaconda requests
 
 when done:
 source deactivate trade-bot
+

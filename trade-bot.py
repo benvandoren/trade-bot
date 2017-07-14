@@ -9,6 +9,7 @@
 # - dryRun simulates trades using flag
 #
 # TODO: 
+# - Bittrex.py api exceptions
 # - more intelligent cancelling (eg. support having a simultaneous buyin and stop loss, 
 #   ignore sells that we probably didn't place based on rate/quantity, it's arguable what behavior is desired)
 # - refactor 
@@ -113,6 +114,7 @@ def main(args):
           print("error reading %s coin rate" % (coin))
           continue
 
+        # TODO catch if this is 'NoneType' ??? how does this happen if there is success
         last = float(rate['result']['Last']) # last, ask, bid
 
         if verbose > 3:
